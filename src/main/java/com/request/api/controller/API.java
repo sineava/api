@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.request.api.bean.Car;
 import com.request.api.bean.Product;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,5 +50,10 @@ public class API {
         }
         if(list.isEmpty()) {return null;}
         return JSON.toJSONString(new Product(0,list));
+    }
+
+    @PostMapping("/upload")
+    public void upload(@RequestParam("files") MultipartFile[] files) {
+        System.out.println(files);
     }
 }
