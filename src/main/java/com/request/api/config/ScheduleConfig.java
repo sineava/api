@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 @EnableScheduling
-//@Configuration
+@Configuration
 public class ScheduleConfig {
 
     @Autowired
