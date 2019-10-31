@@ -1,11 +1,8 @@
 package com.request.api.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.request.api.bean.NewInfo;
+import com.request.api.bean.*;
 import com.request.api.service.VueMallApiService;
-import com.request.api.bean.Image;
-import com.request.api.bean.New;
-import com.request.api.bean.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +20,7 @@ import java.util.List;
 public class VueMallApiController {
     private List<String> img_list = new ArrayList<>();
     private List<New> news_list = new ArrayList<>();
+    private List<Category> category_list = new ArrayList<>();
 
     @Autowired VueMallApiService vueMallApiService;
 
@@ -69,6 +67,16 @@ public class VueMallApiController {
                 "\n",new Date()));
     }
 
+    {
+        category_list.add(new Category(1,"家居生活"));
+        category_list.add(new Category(2,"摄影设计"));
+        category_list.add(new Category(3,"明星美女"));
+        category_list.add(new Category(4,"摄影器材"));
+        category_list.add(new Category(5,"明星写真"));
+        category_list.add(new Category(6,"清纯甜美"));
+        category_list.add(new Category(7,"古典美女"));
+    }
+
     @GetMapping("/getlunbotu")
     public String getLunBoTu() {
         Image img = new Image();
@@ -108,5 +116,75 @@ public class VueMallApiController {
             news.setStatus(0);
         }
         return JSON.toJSONString(news);
+    }
+
+    @GetMapping("/getcomments/{id}")
+    public String getComments(@PathVariable("id") Integer id,@RequestParam("pageindex") Integer pageIndex) {
+        Message message = new Message<Comment>();
+        List<Comment> list = new ArrayList<>();
+        try {
+            list = vueMallApiService.getComments(id,pageIndex);
+            message.setMessage(list);
+            message.setStatus(1);
+        } catch (Exception e) {
+            message.setStatus(0);
+            message.setMessage(null);
+        }
+        return JSON.toJSONString(message);
+    }
+
+    @PostMapping("/postcomment/{id}")
+    public String postComment(@PathVariable("id") Integer id) {
+        Message message = new Message();
+        try {
+            //默认评论成功(剩下了数据库操作,此处就不写了)
+            message.setStatus(1);
+        } catch (Exception e) {
+            message.setStatus(0);
+        }
+        return JSON.toJSONString(message);
+    }
+
+    @GetMapping("/getimgcategory")
+    public String getImgcategory() {
+        Message<Category> message = new Message<>();
+        try {
+            message.setStatus(1);
+            message.setMessage(category_list);
+        } catch (Exception e) {
+            message.setStatus(0);
+            message.setMessage(null);
+        }
+        return JSON.toJSONString(message);
+    }
+
+    @GetMapping("/getimages/{id}")
+    public String getImagesByCateId(@PathVariable("id") Integer id) {
+        Message<Img> message = new Message<>();
+        List<Img> list = new ArrayList<>();
+        try {
+            list = vueMallApiService.getImagesByCateId(id);
+            message.setStatus(1);
+            message.setMessage(list);
+        } catch (Exception e) {
+            message.setStatus(0);
+            message.setMessage(null);
+        }
+        return JSON.toJSONString(message);
+    }
+
+    @GetMapping("/getgoods")
+    public String getGoods(Integer pageindex) {
+        Message<GoodInfo> message = new Message<>();
+        List<GoodInfo> goods_list = new ArrayList<>();
+        try {
+            goods_list = vueMallApiService.getGoods(pageindex);
+            message.setMessage(goods_list);
+            message.setStatus(1);
+        } catch (Exception e) {
+            message.setMessage(null);
+            message.setStatus(0);
+        }
+        return JSON.toJSONString(message);
     }
 }

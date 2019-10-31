@@ -5,4 +5,17 @@
     <select id="getNewInfo" resultType="com.request.api.bean.NewInfo">
         select * from newinfo where id = #{id}
     </select>
+
+    <select id="getComments" resultType="com.request.api.bean.Comment">
+        select id,page_index pageIndex,user_name userName,content,add_time addTime from comment where id = #{id} and page_index = ${pageIndex}
+    </select>
+
+    <select id="getImagesByCateId" resultType="com.request.api.bean.Img">
+        select * from img where id = #{id}
+    </select>
+
+    <select id="getGoods" resultType="com.request.api.bean.GoodInfo">
+        select id,title,add_time addTime,zhaiyao zhaiYao,click,img_url imgUrl,
+              sell_price sellPrice,market_price marketPrice,stock_quantity stockQuantity from goodinfo
+    </select>
 </mapper>
