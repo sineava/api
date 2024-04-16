@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 
-let status = true
+let status = false
 
 // 本地记得加.
 app.get('/status', async (_, res) => {
