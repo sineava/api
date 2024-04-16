@@ -3,6 +3,11 @@ const app = express()
 
 let status = false
 
+app.use((_, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  next()
+})
+
 // 本地记得加.
 app.get('/status', async (_, res) => {
   return res.json({ status })
