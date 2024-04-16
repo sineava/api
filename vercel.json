@@ -2,8 +2,8 @@
   "version": 2,
   "rewrites": [
     {
-      "source": "/json",
-      "destination": "variable.json"
+      "source": "variable.json",
+      "destination": "../variable.json"
     },
     {
       "source": "/:path*",
