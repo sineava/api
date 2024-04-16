@@ -9,7 +9,7 @@ app.get('/status', async (_, res) => {
 })
 
 app.get('/change', async (req, res) => {
-  const status = req.query?.status === 'true'
+  status = req.query?.status === 'true'
   return res.json({ status })
 })
 
