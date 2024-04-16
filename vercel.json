@@ -1,4 +1,13 @@
 {
   "version": 2,
-  "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
+  "rewrites": [
+    {
+      "source": "/json",
+      "destination": "variable.json"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/api"
+    }
+  ]
 }
